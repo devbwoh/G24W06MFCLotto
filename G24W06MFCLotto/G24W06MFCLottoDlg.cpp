@@ -167,22 +167,24 @@ HCURSOR CG24W06MFCLottoDlg::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
+static bool Contains(const CArray<int, int>& array, int n) {
+	for (int i = 0; i < array.GetCount(); i++) {
+		if (array[i] == n) {
+			return true;
+		}
+	}
+	return false;
+}
+
 void CG24W06MFCLottoDlg::OnBtnGenerateClicked()
 {
 	CArray<int, int> nums;
 
+	int n = 0;
+
 	while (nums.GetCount() < 6) {
-		bool duplicated = false;
-		int n = rand() % 44 + 1;
-
-		for (int i = 0; i < nums.GetCount(); i++) {
-			if (nums[i] == n) {
-				duplicated = true;
-				break;
-			}
-		}
-
-		if (!duplicated)
+		n = rand() % 44 + 1;
+		if (!Contains(nums, n))
 			nums.Add(n);
 	}
 
