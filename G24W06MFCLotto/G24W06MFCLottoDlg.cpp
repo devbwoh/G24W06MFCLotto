@@ -167,25 +167,25 @@ HCURSOR CG24W06MFCLottoDlg::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
-static bool Contains(const CArray<int, int>& array, int n) {
+static void AddWithInsertionSort(CArray<int, int>& array, int n) {
 	for (int i = 0; i < array.GetCount(); i++) {
-		if (array[i] == n) {
-			return true;
+		if (array[i] == n)
+			return;
+		else if (array[i] > n) {
+			array.InsertAt(i, n);
+			return;
 		}
 	}
-	return false;
+	array.Add(n);
 }
 
 void CG24W06MFCLottoDlg::OnBtnGenerateClicked()
 {
 	CArray<int, int> nums;
 
-	int n = 0;
-
 	while (nums.GetCount() < 6) {
-		n = rand() % 44 + 1;
-		if (!Contains(nums, n))
-			nums.Add(n);
+		int n = rand() % 44 + 1;
+		AddWithInsertionSort(nums, n);
 	}
 
 	Num1.Format(L"%d", nums[0]);
