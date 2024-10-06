@@ -169,10 +169,29 @@ HCURSOR CG24W06MFCLottoDlg::OnQueryDragIcon()
 
 void CG24W06MFCLottoDlg::OnBtnGenerateClicked()
 {
-	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-	CString num;
-	num.Format(L"%d", rand() % 44 + 1);
+	CArray<int, int> nums;
 
-	Num1 = num;
+	while (nums.GetCount() < 6) {
+		bool duplicated = false;
+		int n = rand() % 44 + 1;
+
+		for (int i = 0; i < nums.GetCount(); i++) {
+			if (nums[i] == n) {
+				duplicated = true;
+				break;
+			}
+		}
+
+		if (!duplicated)
+			nums.Add(n);
+	}
+
+	Num1.Format(L"%d", nums[0]);
+	Num2.Format(L"%d", nums[1]);
+	Num3.Format(L"%d", nums[2]);
+	Num4.Format(L"%d", nums[3]);
+	Num5.Format(L"%d", nums[4]);
+	Num6.Format(L"%d", nums[5]);
+
 	UpdateData(FALSE);
 }
